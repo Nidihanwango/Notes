@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    druid:
+      username: root
+      password: 1
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/ppt
+      filters: stat
+      stat-view-servlet:
+          enabled: true
+          login-username: admin
+          login-password: admin
+          resetEnable: false
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: 'health,beans'
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    beans:
+      enabled: true
+hope:
+  unitNo: 'hope123'

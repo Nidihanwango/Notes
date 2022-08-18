@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>首页</title>
+    <!--引入css等-->
+    <link th:replace="common :: head">
+    <style type="text/css">
+        table {
+            width: 1020px;
+            height: 200px
+        }
+
+        td.title {
+            text-align: center;
+            height: 50px;
+            font-size: x-large;
+        }
+    </style>
+
+</head>
+<body>
+
+<div id="header">
+    <img class="logo_img" width="562" height="103" alt="" th:src="@{/img/hope.jpg}">
+    <!--未登录菜单-->
+    <div th:replace="common :: menu"></div>
+</div>
+<div id="main">
+    <table>
+        <tr>
+            <td class="title">专科专病</td>
+        </tr>
+        <tr>
+            <td class="content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们依据临床中对显著问题的普遍归纳，基于传统中医理念以及自身条件开设五个专科和两个专病，五个专科分别是儿科、女科、男科、美容科、呼吸科；两个专病是胃病和睡眠障碍。主要擅长治疗儿童成人鼻炎、咳嗽、哮喘、脾胃病、睡眠障碍、肥胖等；月经不调（多囊、早衰）不孕症、更年期综合症、产后调理；甲状腺、乳腺各类疾病。皮肤科湿疹、痤疮；小儿咳嗽、多动症、消化不良、不长个不换牙。</td>
+        </tr>
+    </table>
+</div>
+<!--引入页脚-->
+<div th:replace="common :: foot"></div>
+</body>
+</html>

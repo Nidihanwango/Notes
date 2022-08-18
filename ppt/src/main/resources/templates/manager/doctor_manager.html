@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>[[${type == 0 ? '医师' : '治疗师'}]]管理系统</title>
+    <!--引入css等-->
+    <link th:replace="common :: head">
+</head>
+<body>
+
+<div id="header">
+    <img class="logo_img" width="563" height="103" alt="" th:src="@{/img/hope.jpg}" >
+    <div th:replace="common :: managerMenu"></div>
+</div>
+<div id="main">
+    <table id="mainTable">
+        <tr>
+            <td colspan="7">[[${type == 0 ? '医师' : '治疗师'}]]管理系统</td>
+        </tr>
+        <tr>
+            <td>#</td>
+            <td>[[${type == 0 ? '医师' : '治疗师'}]]姓名</td>
+            <td>出诊状态</td>
+            <td>诊费</td>
+            <td>出诊时间</td>
+            <td colspan="2">操作</td>
+        </tr>
+        <tr th:each="doctor,stat : ${doctors}">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${doctor.name}"></td>
+            <td th:text="${doctor.status == 0 ? '正常出诊' : '暂休'}"></td>
+            <td th:text="${doctor.consultationFee}"></td>
+            <td th:text="${doctor.workTime}"></td>
+            <td>
+                <a th:href="@{/manager/updateDoctor/{type}/{id}(type = ${type},id = ${doctor.id})}">
+                    修改
+                </a>
+            </td>
+            <td>
+                <a v-on:click="deleteFun" th:href="@{/doctor(id = ${doctor.id},type = ${doctor.type})}">
+                    删除
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><a th:href="@{/manager/addDoctor/{type}(type = ${type})}">添加[[${type == 0 ? '医师' : '治疗师'}]]</a></td>
+        </tr>
+    </table>
+</div>
+<form id="deleteForm" method="post">
+    <input type="hidden" name="_method" value="delete">
+</form>
+<form id="addForm" method="post">
+</form>
+<script type="text/javascript">
+    new Vue({
+        el: '#mainTable',
+        methods: {
+            deleteFun(event){
+                var deleteForm = document.getElementById("deleteForm");
+                deleteForm.action = event.target.href;
+                deleteForm.submit();
+                event.preventDefault();
+            }
+
+        }
+    });
+</script>
+
+<!--引入页脚-->
+<div th:replace="common :: foot"></div>
+</body>
+</html>

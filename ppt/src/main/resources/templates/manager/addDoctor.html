@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>[[${type == 0 ? '添加医师' : '添加治疗师'}]]</title>
+    <!--引入css等-->
+    <link th:replace="common :: head">
+    <style type="text/css">
+        h1 {
+            text-align: center;
+            margin-top: 200px;
+        }
+
+        h1 a {
+            color: red;
+        }
+
+        input {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <img class="logo_img" width="563" height="103" alt="" th:src="@{/img/hope.jpg}" >
+    <div th:replace="common :: managerMenu"></div>
+</div>
+
+<div id="main">
+    <form th:action="@{/doctor}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="type" th:value="${type}">
+        <table>
+            <tr>
+                <td colspan="4">[[${type == 0 ? '添加医师' : '添加治疗师'}]]</td>
+            </tr>
+            <tr>
+                <td>姓名</td>
+                <td>介绍</td>
+                <td>专科</td>
+                <td>专病</td>
+            </tr>
+            <tr>
+                <td><input name="name" type="text" /></td>
+                <td><input name="introduce" type="text" /></td>
+                <td><input name="specialty" type="text" /></td>
+                <td><input name="specificDisease" type="text" /></td>
+			</tr>
+			<tr>
+                <td th:class="${type == 0 ? '' : 'hidden'}">挂号费</td>
+				<td>诊费</td>
+				<td>出诊时间</td>
+				<td>[[${type == 0 ? '医师寄语' : '治疗项目'}]]</td>
+                <td th:class="${type == 0 ? 'hidden' : ''}">接诊范围</td>
+			</tr>
+			<tr>
+                <td th:class="${type == 0 ? '' : 'hidden'}"><input name="registrationFee" type="text" /></td>
+                <td><input name="consultationFee" type="text" /></td>
+                <td><input name="workTime" type="text" /></td>
+                <td><input th:name="${type == 0 ? 'message' : 'treatment'}" type="text" /></td>
+                <td th:class="${type == 0 ? 'hidden' : ''}"><input name="receptionScope" type="text" /></td>
+
+            </tr>
+            <tr>
+                <td colspan="2">上传照片</td>
+				<td></td>
+				<td></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input name="photo" type="file" /></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="submit" value="提交"/></td>
+            </tr>
+        </table>
+    </form>
+
+
+</div>
+<!--引入页脚-->
+<div th:replace="common :: foot"></div>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+    <!--引入css等-->
+    <link th:replace="common :: head">
+    <style type="text/css">
+        .login_form {
+            height: 420px;
+            margin-top: 25px;
+        }
+        .form {
+            margin-top: 50px;
+        }
+        .ft {
+            height: 250px;
+        }
+    </style>
+</head>
+<body>
+<div id="login_header">
+</div>
+<div class="login_banner">
+    <div id="l_content">
+        <span class="login_word">欢迎注册</span>
+    </div>
+    <div id="content">
+        <div class="login_form">
+            <div class="login_box">
+                <div class="tit">
+                    <h1>注册</h1>
+                    <p v-if="pageError">
+                        <span class="errorMsg">{{errorMsg}}</span>
+                    </p>
+                    <p v-if="!pageError">
+                        <span class="errorMsg" th:text="${msg}"/>
+                    </p>
+                </div>
+                <div class="form">
+                    <form th:action="@{/user}" method="post">
+                        <table class="ft">
+                            <tr>
+                                <td>
+                                    用户名称：
+                                </td>
+                                <td>
+                                    <input v-model="username" class="itxt" type="text" placeholder="请输入用户名" autocomplete="off" tabindex="1"
+                                           name="username" id="username"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>用户密码：</label>
+                                </td>
+                                <td>
+                                    <input v-model="password" class="itxt" type="password" placeholder="请输入密码" autocomplete="off" tabindex="1"
+                                           name="password" id="password"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>确认密码：</label>
+                                </td>
+                                <td>
+                                    <input v-model="repwd" class="itxt" type="password" placeholder="确认密码" autocomplete="off" tabindex="1"
+                                           name="repwd" id="repwd"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>单位编号：</label>
+                                </td>
+                                <td>
+                                    <input v-model="companyCode" class="itxt" type="password"
+                                           style="width: 150px;" id="company" name="companyCode"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <input v-on:click="submit" type="submit" value="注册" id="sub_btn"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var formData = {username:'',password:'',repwd:'',companyCode:'',errorMsg:'',pageError:false}
+    var form = new Vue({
+        el: '#content',
+        data: formData,
+        methods: {
+            submit(event){
+                var pattern = /^[a-z0-9_-]{6,18}$/;
+                if (!pattern.test(formData.username)){
+                    formData.errorMsg = '用户名输入不合法，请重新输入';
+                    formData.pageError = true;
+                    event.preventDefault();
+                    return;
+                }
+                if (!pattern.test(formData.password)){
+                    formData.errorMsg = '密码输入不合法，请重新输入';
+                    formData.pageError = true;
+                    event.preventDefault();
+                    return;
+                }
+                if (formData.repwd != formData.password){
+                    formData.errorMsg = '两次输入的密码不一样';
+                    formData.pageError = true;
+                    event.preventDefault();
+                    return;
+                }
+                var s = formData.companyCode.trim();
+                if (s == ""){
+                    formData.errorMsg = '单位编码不能为空';
+                    formData.pageError = true;
+                    event.preventDefault();
+                    return;
+                }
+            }
+        }
+    });
+</script>
+<!--引入页脚-->
+<div th:replace="common :: foot"></div>
+</body>
+</html>

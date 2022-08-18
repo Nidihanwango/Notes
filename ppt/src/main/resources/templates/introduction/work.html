@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>每日出诊医师</title>
+    <!--引入css等-->
+    <link th:replace="common :: head">
+</head>
+<body>
+<div id="header">
+    <img class="logo_img" width="562" height="103" alt="" th:src="@{/img/hope.jpg}">
+    <!--未登录菜单-->
+    <div th:replace="common :: menu"></div>
+</div>
+<div id="main">
+    <div id="sub1">
+        <table>
+            <tr>
+                <td>#</td>
+                <td>医师姓名</td>
+                <td>出诊状态</td>
+                <td>出诊时间</td>
+            </tr>
+            <tr th:each="doctor,stat : ${yishi}">
+                <td th:text="${stat.count}"></td>
+                <td th:text="${doctor.name}"></td>
+                <td th:text="${doctor.status == 0 ? '正常出诊' : '暂休'}"></td>
+                <td th:text="${doctor.workTime}"></td>
+            </tr>
+        </table>
+    </div>
+    <div id="sub2">
+        <table>
+            <tr>
+                <td>#</td>
+                <td>治疗师姓名</td>
+                <td>出诊状态</td>
+                <td>出诊时间</td>
+            </tr>
+            <tr th:each="doctor,stat : ${zhiliaoshi}">
+                <td th:text="${stat.count}"></td>
+                <td th:text="${doctor.name}"></td>
+                <td th:text="${doctor.status == 0 ? '正常出诊' : '暂休'}"></td>
+                <td th:text="${doctor.workTime}"></td>
+            </tr>
+            <tr>
+                <td colspan="4"><a th:href="@{/introduction/ppt}" style="text-decoration: none;">出诊大夫演示</a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!--引入页脚-->
+<div th:replace="common :: foot"></div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+编号	医师姓名    类型   	介绍		专科		专病			挂号费   
+id  	  name     type    introduce   specialty  specific_disease registration_fee
+诊费   				出诊时间    治疗项目   擅长接诊范围     医师寄语    图片路径
+consultation_fee    wort_time   treatment  reception_scope  message     img_path
+出诊状态
+status 0 表示正常 1 表示暂休
+
+
+医师表  type = 0 代表医师   type = 1 代表治疗师
+create database ppt;
+
+create table t_doctor(
+	id int primary key auto_increment,
+	name varchar(20),
+	type int,
+	introduce varchar(100),
+	specialty varchar(255),
+	specific_disease varchar(255),
+	registration_fee decimal(11,2),
+	consultation_fee decimal(11,2),
+	work_time varchar(50),
+	treatment varchar(50),
+	reception_scope varchar(255),
+	message varchar(50),
+	img_path varchar(50),
+	status int default 0
+);
+
+insert into t_doctor(name,work_time) values('zhangsan','zhouyi');
+
+用户表
+create table t_user(
+	id int primary key auto_increment,
+	username varchar(20),
+	password varchar(20)
+);
+
+insert into t_user(username,password) values('admin','admin');

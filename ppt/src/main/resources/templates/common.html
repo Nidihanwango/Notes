@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:fragment="head">
+        <!--        <link rel="icon" th:src="@{/favicon.ico}">-->
+        <link type="text/css" rel="stylesheet" th:href="@{/css/style.css}">
+        <script type="text/javascript" src="https://cdn.staticfile.org/vue/2.7.0/vue.min.js"></script>
+    </div>
+</head>
+<body>
+<div th:fragment="menu">
+    <!--未登录菜单-->
+    <div th:class="${session.user == null ? 'ppt1' : 'hidden'}">
+        <a th:href="@{/user/login}"> 登录 </a>
+        <a th:href="@{/user/regist}"> 注册 </a>
+        <a th:href="@{/manager}"> 后台管理 </a>
+        <a th:href="@{/work}"> 每日出诊医师 </a>
+        <a th:href="@{/index}"> 返回主页 </a>
+    </div>
+    <!--登录成功的菜单-->
+    <div th:class="${session.user != null ? 'ppt1' : 'hidden'}">
+        <span>欢迎<span class="um_span">[[${session.user == null ? '' : session.user.username}]]</span>登录</span>
+        <a th:href="@{/manager}"> 后台管理 </a>
+        <a th:href="@{/work}"> 每日出诊医师 </a>
+        <a th:href="@{/user}"> 注销 </a>
+        <a th:href="@{/index}"> 返回主页 </a>
+    </div>
+</div>
+
+
+<!--管理菜单-->
+<div th:fragment="managerMenu">
+    <a th:href="@{/doctor/0}"> 医师管理 </a>
+    <a th:href="@{/doctor/1}"> 治疗师管理 </a>
+    <a th:href="@{/user}"> 注销 </a>
+    <a th:href="@{/index}"> 返回主页 </a>
+</div>
+<!--页脚-->
+<div class="foot" th:fragment="foot">
+    <div style="display: table; text-align: center; width: 100%;position: absolute;">
+        <img th:src="@{/img/yy.png}" class="rt" style="margin-top:-9px;width: 17px;z-index: 10000;margin-left: -15px;">
+    </div>
+    <div style="height: 20px; width: 100%; text-align: center;">
+        <img th:src="@{/img/hope_logo2.png}" style="width: 70px;">
+    </div>
+    <div class="border02"
+         style="text-align: center;font-size:0.5rem; padding-top:1.3rem; color:#b3b3b3; min-height: 80px;">
+        ©2020 北京厚朴中医诊所有限公司
+    </div>
+</div>
+</body>
+</html>

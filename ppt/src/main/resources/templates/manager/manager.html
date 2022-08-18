@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>后台管理</title>
+	<!--引入css等-->
+	<link th:replace="common :: head">
+<style type="text/css">
+	h1 {
+		text-align: center;
+		margin-top: 200px;
+	}
+</style>
+</head>
+<body>
+	
+	<div id="header">
+			<img class="logo_img" width="563" height="103" alt="" th:src="@{/img/hope.jpg}" >
+			<div th:replace="common :: managerMenu"></div>
+	</div>
+	
+	<div id="main">
+		<h1>欢迎管理员进入后台管理系统</h1>
+	</div>
+	<!--引入页脚-->
+	<div th:replace="common :: foot"></div>
+</body>
+</html>

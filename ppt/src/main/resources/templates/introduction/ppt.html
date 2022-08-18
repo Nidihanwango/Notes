@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <title>出诊大夫演示</title>
+    <!--引入css等-->
+    <link th:replace="common :: head">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style type="text/css">
+        #ppt {
+            position: relative;
+            top: 50px;
+        }
+        #photo {
+            position: absolute;
+            top: 1px;
+            left: 244px;
+            height: 650px;
+            width: 433px;
+            border: 1px black solid;
+        }
+        #introduction {
+            position: relative;
+            left: 219px;
+            top: -77px;
+            height: 650px;
+            width: 1000px;
+            border: 1px black solid;
+            overflow: auto;
+        }
+        table {
+            width: 950px;
+            margin-top: 30px;
+            margin-left: 50px;
+            border-collapse: collapse;
+        }
+        table td {
+            width: 125px;
+            text-align: left;
+            border-bottom: 1px #e3e3e3 solid;
+            padding: 10px;
+            font-size: x-large;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <img class="logo_img" width="562" height="103" alt="" th:src="@{/img/hope.jpg}">
+    <!--未登录菜单-->
+    <div th:replace="common :: menu"></div>
+</div>
+<div id="ppt">
+    <div id="photo">
+        <img id="doctorImg" width="433" height="650" alt="图片未找到" v-bind:src="imgPath" >
+    </div>
+    <div id="introduction">
+        <table>
+            <tr>
+                <td>姓名：</td>
+                <td colspan="7">{{doctor.name}}</td>
+            </tr>
+            <tr>
+                <td>介绍：</td>
+                <td colspan="7">{{doctor.introduce}}</td>
+            </tr>
+            <tr>
+                <td>专科：</td>
+                <td colspan="7">{{doctor.specialty}}</td>
+            </tr>
+            <tr>
+                <td>专病：</td>
+                <td colspan="7">{{doctor.specificDisease}}</td>
+            </tr>
+            <tr v-bind:class="{'hidden' : !typeIs0}">
+                <td>挂号费：</td>
+                <td colspan="7">{{doctor.registrationFee}} 元</td>
+            </tr>
+            <tr>
+                <td>诊费：</td>
+                <td colspan="7">{{doctor.consultationFee}} 元/小时</td>
+            </tr>
+            <tr v-bind:class="{'hidden' : typeIs0}">
+                <td>治疗项目</td>
+                <td colspan="7">{{doctor.treatment}}</td>
+            </tr>
+            <tr>
+                <td>出诊时间：</td>
+                <td colspan="7">{{doctor.workTime}}</td>
+            </tr>
+            <tr v-bind:class="{'hidden' : typeIs0}">
+                <td>接诊范围：</td>
+                <td colspan="7">{{doctor.receptionScope}}</td>
+            </tr>
+            <tr v-bind:class="{'hidden' : !typeIs0}">
+                <td>医师寄语</td>
+                <td colspan="7">{{doctor.message}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    var ppt = new Vue({
+        el: '#ppt',
+        data: {
+            doctor: '',
+            imgPath: '',
+            typeIs0: true
+        },
+        mounted(){
+            axios
+                .get('http://localhost:8080/axios')
+                .then(function(param) {
+                    var i = 0;
+                    ppt.doctor = param.data[i++];
+                    ppt.imgPath = "/getPhoto/" + ppt.doctor.imgPath;
+                    if (ppt.doctor.type == 0) {
+                        ppt.typeIs0 = true;
+                    } else {
+                        ppt.typeIs0 = false;
+                    }
+                    setInterval(function (){
+                        ppt.doctor = param.data[i++];
+                        ppt.imgPath = "/getPhoto/" + ppt.doctor.imgPath;
+                        if (ppt.doctor.type == 0){
+                            ppt.typeIs0 = true;
+                        }else{
+                            ppt.typeIs0 = false;
+                        }
+                        if (i >= param.data.length){
+                            i = 0;
+                        }
+                    },1000);
+                })
+                .catch(function (error) { // 请求失败处理
+                    console.log(error);
+                });
+        }
+    });
+</script>
+<!--引入页脚-->
+<div th:replace="common :: foot"></div>
+</body>
+</html>
